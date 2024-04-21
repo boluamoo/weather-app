@@ -7,17 +7,17 @@ import UpcomingWeather from '../screens/UpcomingWeather'
 
 const Tab = createBottomTabNavigator()
 
-const Tabs = () => {
+const Tabs = ({weather}) => {
   return (
     <Tab.Navigator
       screenOptions={{
-        // headerShown: false,
+        headerShown: false,
         tabBarActiveTintColor: 'tomato',
         tabBarInactiveTintColor: 'grey',
         tabBarStyle: {
-          backgroundColor: 'lightblue',
+          backgroundColor: 'white',
           // padding: 10,
-          height: 70,
+          // height: 70,
         },
         headerStyle: {
           backgroundColor: 'lightblue',
@@ -30,13 +30,14 @@ const Tabs = () => {
       <Tab.Screen
         name="City"
         component={City}
+        initialParams={{weather}}
         options={{
           tabBarActiveTintColor: 'green',
           tabBarIcon: ({ focused }) => (
             <Feather
               name="home"
               size={24}
-              color={focused ? 'green' : 'black'}
+              color={focused ? 'tomato' : 'black'}
             />
           ),
         }}
@@ -44,10 +45,11 @@ const Tabs = () => {
       <Tab.Screen
         name="Current Weather"
         component={CurrentWeather}
+        initialParams={{weather}}
         options={{
           tabBarStyle: {
             backgroundColor: 'pink',
-            height: 70,
+            // height: 70,
           },
           headerStyle: {
             backgroundColor: 'pink',
@@ -64,6 +66,7 @@ const Tabs = () => {
       <Tab.Screen
         name="Upcoming Weather"
         component={UpcomingWeather}
+        initialParams={{weather}}
         options={{
           tabBarIcon: ({ focused }) => (
             <Feather

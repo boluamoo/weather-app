@@ -8,11 +8,12 @@ import { StyleSheet, Text, View } from 'react-native'
 import GlobalStyles from '../config/GlobalStyles'
 import { AntDesign } from '@expo/vector-icons'
 import { Feather } from '@expo/vector-icons'
+import IconText from '../components/IconText'
+import moment from 'moment'
 
-const City = () => {
-  // const [fontsLoaded] = useFonts({
-  //   'RobotoBlack' : require("./assets/fonts/Roboto-Black.ttf")
-  // })
+
+const City = ({ route }) => {
+  const { weather } = route.params
   let [fontsLoaded, fontError] = useFonts({
     Inter_700Bold,
     Roboto_400Regular,
@@ -27,23 +28,34 @@ const City = () => {
     <ImageBackground source={city} style={styles.image}>
       <SafeAreaView style={[GlobalStyles.droidSafeArea, styles.container]}>
         <View style={styles.headerBox}>
-          <Text style={[styles.london, styles.headingFont]}>London</Text>
-          <Text style={[styles.headingFont, styles.uk]}>UK</Text>
-          <View style={styles.population}>
-            <AntDesign style={styles.user} name="user" size={25} color="red" />
-            <Text style={styles.populationText}>8000</Text>
-          </View>
+          <Text style={[styles.london, styles.headingFont]}>
+            {weather.city.name}
+          </Text>
+          <Text style={[styles.headingFont, styles.uk]}>{weather.city.country}</Text>
+          <IconText
+            iconContainer={styles.population}
+            iconColor={'red'}
+            bodyText={weather.city.population}
+            bodyTextStyles={styles.populationText}
+            iconName={'user'}
+          />
         </View>
         <View style={styles.bottomBox}>
           <View style={styles.weatherTimeWrapper}>
-            <View style={styles.timer}>
-              <Feather name="sunrise" size={24} color="white" />
-              <Text style={styles.timeText}>10:46:58am</Text>
-            </View>
-            <View style={styles.timer}>
-              <Feather name="sunset" size={24} color="white" />
-              <Text style={styles.timeText}>17:28:15pm</Text>
-            </View>
+            <IconText
+              iconContainer={styles.population}
+              iconColor={'white'}
+              bodyText={moment(weather.city.sunrise).format('HH:mm:ss')}
+              bodyTextStyles={styles.timeText}
+              iconName={'sunrise'}
+            />
+            <IconText
+              iconContainer={styles.population}
+              iconColor={'white'}
+              bodyText={moment(weather.city.sunset).format('HH:mm:ss')}
+              bodyTextStyles={styles.timeText}
+              iconName={'sunset'}
+            />
           </View>
         </View>
         <StatusBar style="auto" hidden={false} />
@@ -86,10 +98,7 @@ const styles = StyleSheet.create({
   },
   populationText: {
     color: 'red',
-    fontWeight: 'bold',
-    fontSize: 20,
   },
-  user: {},
   bottomBox: {
     flex: 3,
     // borderColor: "white",
@@ -113,8 +122,6 @@ const styles = StyleSheet.create({
   },
   timeText: {
     color: 'white',
-    fontWeight: 'bold',
-    fontSize: 20,
   },
   text: {
     fontSize: 50,

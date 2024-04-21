@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar'
 import {
+  FlatList,
   ImageBackground,
   SafeAreaView,
   StyleSheet,
@@ -9,41 +10,80 @@ import {
 import { Feather } from '@expo/vector-icons'
 import GlobalStyles from '../config/GlobalStyles'
 import background from '../assets/background.jpg'
+import ListItem from '../components/ListItem'
 
 const UpcomingWeather = () => {
+  const DATA = [
+    {
+      dt_txt: '2022-08-30 17:00:00',
+      main: {
+        temp_min: 292.84,
+        temp_max: 294.94,
+      },
+      weather: [
+        {
+          main: 'Clear',
+        },
+      ],
+    },
+    {
+      dt_txt: '2022-05-30 17:00:00',
+      main: {
+        temp_min: 300.84,
+        temp_max: 394.94,
+      },
+      weather: [
+        {
+          main: 'Cloudy',
+        },
+      ],
+    },
+    {
+      dt_txt: '2022-11-30 16:00:00',
+      main: {
+        temp_min: 123.84,
+        temp_max: 222.94,
+      },
+      weather: [
+        {
+          main: 'Rainy',
+        },
+      ],
+    },
+
+    {
+      dt_txt: '2022-05-30 16:00:00',
+      main: {
+        temp_min: 211.84,
+        temp_max: 202.94,
+      },
+      weather: [
+        {
+          main: 'Rainy',
+        },
+      ],
+    },
+  ]
+
   return (
     <ImageBackground source={background} style={styles.imageBackground}>
       <SafeAreaView style={[styles.container, GlobalStyles.droidSafeArea]}>
         <Text styles={{ color: 'black' }}>Upcoming Weather</Text>
-        <View style={styles.weatherRow}>
-          <View style={styles.weatherDetails}>
-            <Feather name="sun" size={50} color="white" />
-            <View style={[styles.weatherDetailsText]}>
-              <Text style={[styles.date, styles.white]}>2023-02-18</Text>
-              <Text style={[styles.date, styles.white]}>12:00:00</Text>
-              <Text style={[styles.bigText, styles.white]}>7.55</Text>
-              <Text style={[styles.bigText, styles.white]}>8.55</Text>
-            </View>
-          </View>
-          <View style={styles.weatherDetails}>
-            <Feather name="sun" size={50} color="white" />
-            <View style={[styles.weatherDetailsText]}>
-              <Text style={[styles.date, styles.white]}>2023-02-18</Text>
-              <Text style={[styles.date, styles.white]}>15:00:00</Text>
-              <Text style={[styles.bigText, styles.white]}>7.55</Text>
-              <Text style={[styles.bigText, styles.white]}>8.55</Text>
-            </View>
-          </View>
-          <View style={styles.weatherDetails}>
-            <Feather name="sun" size={50} color="white" />
-            <View style={[styles.weatherDetailsText]}>
-              <Text style={[styles.date, styles.white]}>2023-02-18</Text>
-              <Text style={[styles.date, styles.white]}>18:00:00</Text>
-              <Text style={[styles.bigText, styles.white]}>7.55</Text>
-              <Text style={[styles.bigText, styles.white]}>8.55</Text>
-            </View>
-          </View>
-        </View>
+        {/* <ListItem /> */}
+        <FlatList
+          data={DATA}
+          renderItem={({ item }) => (
+            <ListItem
+              condition={item.weather[0].main}
+              dateText={item.dt_txt}
+              min={item.main.temp_min}
+              max={item.main.temp_max}
+            />
+          )}
+          keyExtractor={(item) => item.dt_txt}
+          showsVerticalScrollIndicator={false}
+          // contentContainerStyle={styles.}
+        />
         <StatusBar style="auto" />
       </SafeAreaView>
     </ImageBackground>
@@ -74,13 +114,16 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   weatherDetailsText: {
-    justifyContent: 'space-between',
+    justifyContent: 'space-evenly',
     flexDirection: 'row',
     flex: 1,
     alignItems: 'center',
   },
   bigText: {
     fontSize: 18,
+  },
+  weatherColumn: {
+    flexDirection: 'column',
   },
 })
 

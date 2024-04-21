@@ -34,7 +34,13 @@
             "node_modules/@expo-google-fonts/inter/Inter_700Bold.ttf"
           ]
         }
-      ]
+      ],
+      [
+        "expo-location",
+      {
+        "locationAlwaysAndWhenInUsePermission": "Allow Weather App to use your location."
+      }
+    ]
     ]
   }
 }
